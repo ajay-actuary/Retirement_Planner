@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load material_form %}
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Retirement Planner - Dashboard</title>
+
+  <!-- Custom fonts for this template-->
+  <link rel="stylesheet" href="/static/css/all.min.css" type="text/css">
+
+  <!-- Custom styles for this template-->
+  <link rel="stylesheet" href="/static/css/sb-admin-2.min.css">
+      <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <script>var effFrontier_Label = [] </script>
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-2">
+            <h1 class="h3 mb-0 text-gray-800">Retirement Lifestyle Estimator</h1>
+          </div>
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid ">
+          <div class=" ">
+          <div class="row">
+          <form action='' method="post" id="form" class="form-inline">
+
+                <div class="input-group d-xl-inline-flex">
+                {% csrf_token %}
+                {% form form=form %}{% endform %}
+
+                </div>
+
+          </form>
+          <button class="btn btn-primary btn-sm mb-4" style="font-size: 20px; width: 100px; max-width: 100px; background-color: #ed7468 ;
+                max-height: 40px; margin-left:10px" value='Submit' id="SubmitButton" />Submit</button>
+          </div>
+          </div>
+            <p><br></p>
+          </div>
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-70 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Portfolio Mean</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"  id="Portfolio_Mean">{{Portfolio_Mean}} %</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Std Dev</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"  id="Portfolio_Sigma">{{Portfolio_Sigma}} %</div>
+                    </div>
+                      <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1" >Expected Accumulation @ Today's Value</div>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="Accumulation_PV"  style="font-size: 18px">{{Accumulation_PV}} % </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-70 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Salary @ Retirement</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"  id="Salary_at_Retirement">Rs. {{Monthly_Estimate}} </div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1" >Annuity @ Retirement</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"  id="Annuity_at_Retirement">Rs. {{Annuity_Estimate}} </div>
+                    </div>
+                      <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Replacement %</div>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="Replacement_Percent">{{Likely_Estimate}} % </div>
+                        </div>
+                        <div class="col">
+                          <div class="progress progress-sm mr-2">
+                            <div class="progress-bar bg-info" id="Likely_ProgressBar" role="progressbar" style="width: {{Likely_Estimate}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--Replacement Percentage at Retirement -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-70 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1" >Shortfall @ 50% Replacement</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="Replacement_Shortfall">Rs. {{Replacement_Shortfall}}</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Today's Equivalent @ GSec Yield</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="Replacement_Shortfall_PV">Rs. {{Replacement_Shortfall_PV}}</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+                        <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-danger shadow h-70 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Expected Shortfall (TVar) 95%</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="tVAR">Rs. {{tVAR}} </div>
+                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Today's Equivalent @ GSec Yield</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="tVAR_PV">Rs. {{tVAR_PV}} </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+            <div class="col-lg-6 mb-4">
+
+              <!-- Approach -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Retirement Advice</h6>
+                </div>
+                <div class="card-body">
+                    <h5 class="m-0 font-weight-bold" id="Retirement_Advice">{{Advice|safe}}</h5>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="col-lg-6 mb-4">
+
+              <!-- Project Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Replacement Ratio Scenarios</h6>
+                </div>
+                <div class="card-body">
+                  <h4 class="small font-weight-bold">Stressed Estimate (5 percentile) <span class="float-right" id="Stressed_Estimate">{{Stressed_Estimate}}%</span></h4>
+                  <div class="progress mb-4">
+                    <div class="progress-bar bg-danger" id="5_Width" role="progressbar" style="width: {{Stressed_Estimate}}%" aria-valuenow="{{Stressed_Estimate}}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <h4 class="small font-weight-bold">Pessimistic Estimate (25 percentile) <span class="float-right" id="Pessimistic_Estimate">{{Pessimistic_Estimate}}%</span></h4>
+                  <div class="progress mb-4">
+                    <div class="progress-bar bg-warning" id="25_Width" role="progressbar" style="width: {{Pessimistic_Estimate}}%" aria-valuenow="{{Pessimistic_Estimate}}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <h4 class="small font-weight-bold">Likely Estimate (50 percentile) <span class="float-right" id="Likely_Estimate">{{Likely_Estimate}}%</span></h4>
+                  <div class="progress mb-4">
+                    <div class="progress-bar" id="50_Width" role="progressbar" style="width: {{Likely_Estimate}}%" aria-valuenow="{{Likely_Estimate}}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <h4 class="small font-weight-bold">Optimistic Estimate (75 percentile) <span class="float-right" id="Optimistic_Estimate">{{Optimistic_Estimate}}%</span></h4>
+                  <div class="progress mb-4">
+                    <div class="progress-bar bg-info" id="75_Width" role="progressbar" style="width: {{Optimistic_Estimate}}%" aria-valuenow="{{Optimistic_Estimate}}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <h4 class="small font-weight-bold">Overtly Optimistic Estimate (95 percentile) <span class="float-right" id="Overtly_Optimistic_Estimate">{{Overtly_Optimistic_Estimate}}%</span></h4>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" id="95_Width" role="progressbar" style="width: {{Overtly_Optimistic_Estimate}}%" aria-valuenow="{{Overtly_Optimistic_Estimate}}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+              </div>
+            </div>
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Content Column -->
+            <div class="col-xl-6 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Efficient Portfolio Frontier</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="effFrontierChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Content Column -->
+           <!-- Area Chart -->
+            <div class="col-xl-6 col-lg-7">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Portfolio Advice</h6>
+                </div>
+                <div class="card-body">
+                    <h5 class="m-0 font-weight-bold" id="EffAdvice">{{EffAdvice|safe}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Ajay Shekhar, Harsh Agarwal, Satish Thuwal, Suranjan Banerjee</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+
+
+  <!-- Bootstrap core JavaScript-->
+  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script type="text/javascript" src="/static/js/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script type="text/javascript" src="/static/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script type="text/javascript" src="/static/js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script type="text/javascript" src="/static/js/eff_front.js"></script>
+
+    <!-- User level custom scripts -->
+  <script type="text/javascript" src="/static/js/corpbond.js"></script>
+
+  <script type="text/javascript">
+          $("#SubmitButton").click(function () {
+              var data = new FormData($('#form')[0]);
+
+           if ((parseInt(document.getElementById("id_Age").value) > 50) || (parseInt(document.getElementById("id_Age").value) < 18))
+              {
+                  alert('Enter age between 18 and 50')
+              }
+           else
+           {
+
+                $.ajax({
+                    url: '{% url "Retirement_Dashboard:DashOutput" %}',
+                    data: data,
+                    type: "POST",
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                      if (data.is_taken) {
+                          {#  Update Text of HTML Elements #}
+                        document.getElementById("Retirement_Advice").innerHTML = data.Advice;
+                        document.getElementById("EffAdvice").innerHTML = data.EffAdvice;
+                        document.getElementById("Portfolio_Mean").innerHTML = data.Portfolio_Mean + '%';
+                        document.getElementById("Portfolio_Sigma").innerHTML = data.Portfolio_Sigma + '%';
+                        document.getElementById("Salary_at_Retirement").innerHTML = 'Rs. ' + data.Monthly_Estimate;
+                        document.getElementById("Accumulation_PV").innerHTML = 'Rs. ' + data.Accumulation_PV;
+                        document.getElementById("Annuity_at_Retirement").innerHTML = 'Rs. ' + data.Annuity_Estimate;
+                        document.getElementById("Replacement_Percent").innerHTML = data.Likely_Estimate + '%';
+                        document.getElementById("Replacement_Shortfall").innerHTML = 'Rs. ' + data.Replacement_Shortfall;
+                        document.getElementById("Replacement_Shortfall_PV").innerHTML = 'Rs. ' + data.Replacement_Shortfall_PV;
+                        document.getElementById("tVAR").innerHTML = 'Rs. ' + data.tVAR;
+                        document.getElementById("tVAR_PV").innerHTML = 'Rs. ' + data.tVAR_PV;
+                        document.getElementById("Stressed_Estimate").innerHTML = data.Stressed_Estimate + '%';
+                        document.getElementById("Pessimistic_Estimate").innerHTML = data.Pessimistic_Estimate + '%';
+                        document.getElementById("Likely_Estimate").innerHTML = data.Likely_Estimate + '%';
+                        document.getElementById("Optimistic_Estimate").innerHTML = data.Optimistic_Estimate + '%';
+                        document.getElementById("Overtly_Optimistic_Estimate").innerHTML = data.Overtly_Optimistic_Estimate + '%';
+
+                        {#  Update Progress Bar Widths #}
+                        document.getElementById("Likely_ProgressBar").style.width = data.Likely_Estimate + '%';
+                        document.getElementById("5_Width").style.width = data.Stressed_Estimate + '%';
+                        document.getElementById("25_Width").style.width = data.Pessimistic_Estimate + '%';
+                        document.getElementById("50_Width").style.width = data.Likely_Estimate + '%';
+                        document.getElementById("75_Width").style.width = data.Optimistic_Estimate + '%';
+                        document.getElementById("95_Width").style.width = data.Overtly_Optimistic_Estimate + '%';
+
+
+                        effFrontierChart.data.datasets[0].data = data.effFrontier_json;
+                        effFrontierChart.data.datasets[1].data = data.effFrontier_all_json;
+                        var effFrontier_Label = data.effFrontier_Label;
+                        effFrontierChart.update()
+
+                      }
+                    }
+                 });
+           }
+          })
+    </script>
+</body>
+
+</html>
